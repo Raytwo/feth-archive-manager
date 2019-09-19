@@ -25,13 +25,7 @@
                 <Grid Background="#FFE5E5E5">
                     <DataGrid x:Name="dataGridINFO" Margin="0,27,0,22" AutoGenerateColumns="False" ItemsSource="{Binding Source={StaticResource cvsINFO0}}" CanUserAddRows="False">
                         <DataGrid.Columns>
-                            <DataGridTemplateColumn Header="Entry ID">
-                                <DataGridTemplateColumn.CellTemplate>
-                                    <DataTemplate>
-                                        <xctk:IntegerUpDown Value="{Binding EntryID}"/>
-                                    </DataTemplate>
-                                </DataGridTemplateColumn.CellTemplate>
-                            </DataGridTemplateColumn>
+                            <DataGridTextColumn Header="Entry ID" Binding="{Binding EntryID}"/>
                             <DataGridTextColumn Header="Uncompressed size" Binding="{Binding UncompressedSize}" />
                             <DataGridTextColumn Header="Compressed size" Binding="{Binding CompressedSize}"/>
                             <DataGridCheckBoxColumn Header="Compressed" Binding="{Binding Compressed}"/>
