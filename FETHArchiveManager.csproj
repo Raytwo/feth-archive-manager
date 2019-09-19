@@ -64,6 +64,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="INFO0.cs" />
+    <Compile Include="INFO2.cs" />
     <Compile Include="IO\AlignmentHelper.cs" />
     <Compile Include="IO\EndianBinaryReader.cs" />
     <Compile Include="IO\EndianBinaryWriter.cs" />

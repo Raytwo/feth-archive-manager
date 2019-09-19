@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System.IO;
+using System.Windows;
 using Microsoft.Win32;
 
 namespace FETHArchiveManager
@@ -30,7 +31,9 @@ namespace FETHArchiveManager
                     "FETH Patch Binary (INFO0.bin)|*.bin";
             if(dialog.ShowDialog() == true)
             {
+                INFO2 info2 = new INFO2(info0.Count);
                 info0.Write(dialog.FileName);
+                info2.Write(Path.GetDirectoryName(dialog.FileName) + "/INFO2.bin");
             }
         }
 
