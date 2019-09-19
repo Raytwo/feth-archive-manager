@@ -63,6 +63,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="HexConverter.cs" />
     <Compile Include="INFO0.cs" />
     <Compile Include="INFO2.cs" />
     <Compile Include="IO\AlignmentHelper.cs" />
@@ -97,6 +98,8 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="INFOs\patch1\INFO0.bin" />
+    <EmbeddedResource Include="INFOs\patch2\INFO0.bin" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

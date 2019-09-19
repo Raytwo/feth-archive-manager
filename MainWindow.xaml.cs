@@ -1,5 +1,8 @@
 ﻿using System.IO;
+using System.Linq;
+using System.Reflection;
 using System.Windows;
+using G1Tool.IO;
 using Microsoft.Win32;
 
 namespace FETHArchiveManager
@@ -61,6 +64,15 @@ namespace FETHArchiveManager
         private void NewButtonINFO_Click(object sender, RoutedEventArgs e)
         {
             info0.Clear();
+
+            var assembly = Assembly.GetExecutingAssembly();
+            string resourceName = assembly.GetManifestResourceNames().Single(str => str.EndsWith("101.INFO0.bin"));
+            info0.Read(new EndianBinaryReader(Assembly.GetExecutingAssembly().GetManifestResourceStream(resourceName), Endianness.Little));
+        }
+
+        private void DataGridINFO_CellEditEnding(object sender, System.Windows.Controls.DataGridCellEditEndingEventArgs e)
+        {
+
         }
     }
 }

@@ -25,8 +25,8 @@
                 <Grid Background="#FFE5E5E5">
                     <DataGrid x:Name="dataGridINFO" Margin="0,27,0,22" AutoGenerateColumns="False" ItemsSource="{Binding Source={StaticResource cvsINFO0}}" CanUserAddRows="False">
                         <DataGrid.Columns>
-                            <DataGridTextColumn Header="Entry ID" Binding="{Binding EntryID}"/>
-                            <DataGridTextColumn Header="Uncompressed size" Binding="{Binding UncompressedSize}" />
+                            <DataGridTextColumn Header="Entry ID"  Binding="{Binding EntryID}"/>
+                            <DataGridTextColumn Header="Uncompressed size" Binding="{Binding UncompressedSize, StringFormat={}0x{0:X8}}" />
                             <DataGridTextColumn Header="Compressed size" Binding="{Binding CompressedSize}"/>
                             <DataGridCheckBoxColumn Header="Compressed" Binding="{Binding Compressed}"/>
                             <DataGridTextColumn Header="Filepath" Binding="{Binding Filepath}"/>

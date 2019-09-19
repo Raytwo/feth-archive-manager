@@ -7,13 +7,12 @@ using System.Windows;
 // Les informations générales relatives à un assembly dépendent de
 // l'ensemble d'attributs suivant. Pour modifier les informations
 // associées à un assembly.
-[assembly: AssemblyTitle("FETHArchiveManager")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("Make patching Fire Emblem Three Houses great again")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("FETHArchiveManager")]
-[assembly: AssemblyCopyright("Copyright ©  2019")]
-[assembly: AssemblyTrademark("")]
+[assembly: AssemblyCompany("Raytwo")]
+[assembly: AssemblyProduct("FETH Archive Manager")]
+[assembly: AssemblyCopyright("Copyright © Raytwo 2019")]
+[assembly: AssemblyTrademark("Taking over earth and still kicking in Uranus")]
 [assembly: AssemblyCulture("")]
 
 // L'affectation de la valeur false à ComVisible rend les types invisibles dans cet assembly
@@ -51,5 +50,5 @@ using System.Windows;
 // Vous pouvez spécifier toutes les valeurs ou indiquer les numéros de build et de révision par défaut
 // en utilisant '*', comme indiqué ci-dessous :
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("1.0.0.0")]
-[assembly: AssemblyFileVersion("1.0.0.0")]
+[assembly: AssemblyVersion("1.0.1")]
+[assembly: AssemblyFileVersion("1.0.1")]
