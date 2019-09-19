@@ -1,0 +1,58 @@
+﻿<Window x:Class="FETHArchiveManager.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+        xmlns:scm="clr-namespace:System.ComponentModel;assembly=WindowsBase"
+        xmlns:local="clr-namespace:FETHArchiveManager"
+        mc:Ignorable="d"
+        Title="FETH Archive Manager" Height="450" Width="800">
+    <Window.Resources>
+        <local:INFO0 x:Key="info0"/>
+        <CollectionViewSource x:Key="cvsINFO0" Source="{StaticResource info0}">
+            <CollectionViewSource.SortDescriptions>
+                <scm:SortDescription PropertyName="EntryID"/>
+            </CollectionViewSource.SortDescriptions>
+        </CollectionViewSource>
+    </Window.Resources>
+    <Grid>
+        <TabControl VerticalContentAlignment="Top" Margin="0,0,0,0.5" SelectedIndex="1">
+            <TabItem Header="DATA" IsEnabled="False">
+                <Grid Background="#FFE5E5E5"/>
+            </TabItem>
+            <TabItem Header="INFO">
+                <Grid Background="#FFE5E5E5">
+                    <DataGrid x:Name="dataGridINFO" Margin="0,27,0,22" AutoGenerateColumns="False" ItemsSource="{Binding Source={StaticResource cvsINFO0}}" CanUserAddRows="False">
+                        <DataGrid.Columns>
+                            <DataGridTemplateColumn Header="Entry ID">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <xctk:IntegerUpDown Value="{Binding EntryID}"/>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            <DataGridTextColumn Header="Uncompressed size" Binding="{Binding UncompressedSize}" />
+                            <DataGridTextColumn Header="Compressed size" Binding="{Binding CompressedSize}"/>
+                            <DataGridCheckBoxColumn Header="Compressed" Binding="{Binding Compressed}"/>
+                            <DataGridTextColumn Header="Filepath" Binding="{Binding Filepath}"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                    <ToolBar ToolBarTray.IsLocked="True" VerticalAlignment="Top" HorizontalContentAlignment="Stretch">
+                        <Button x:Name="newButtonINFO" Content="New" Click="NewButtonINFO_Click"/>
+                        <Button x:Name="openButtonINFO" Content="Open" Click="OpenButtonINFO_Click"/>
+                        <Button x:Name="saveButtonINFO" Content="Save" Click="SaveButtonINFO_Click"/>
+                        <Separator/>
+                        <Button x:Name="addButtonINFO" Content="Add" Click="AddButtonINFO_Click"/>
+                        <Button x:Name="removeButtonINFO" Content="Remove" Click="RemoveButtonINFO_Click"/>
+                    </ToolBar>
+                    <StatusBar VerticalAlignment="Bottom" VerticalContentAlignment="Center">
+                        <Label Content="Entry count: " Padding="0"/>
+                        <Label Content="{Binding ItemsSource.Count, ElementName=dataGridINFO}" Padding="0"/>
+                    </StatusBar>
+                </Grid>
+            </TabItem>
+        </TabControl>
+
+    </Grid>
+</Window>
