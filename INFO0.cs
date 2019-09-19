@@ -31,6 +31,8 @@ namespace FETHArchiveManager
                     w.Write((long)1);
                 w.Write(entry.Filepath, StringBinaryFormat.FixedLength, 0x100);
             }
+
+            w.Close();
         }
 
         public void Read(string filename)
