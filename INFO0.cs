@@ -23,7 +23,10 @@ namespace FETHArchiveManager
                 w.Write(entry.EntryID);
                 w.Write(entry.UncompressedSize);
                 w.Write(entry.CompressedSize);
-                w.Write((long)((entry.UncompressedSize == entry.CompressedSize) ? 1 : 0));
+                if (entry.UncompressedSize == entry.CompressedSize)
+                    w.Write((long)0);
+                else
+                    w.Write((long)1);
                 w.Write(entry.Filepath, StringBinaryFormat.FixedLength, 0x100);
             }
         }
@@ -39,7 +42,13 @@ namespace FETHArchiveManager
 
             for(int i = 0;i < count;i++)
             {
-                this.Add(new INFO0Entry() { EntryID = r.ReadInt64(), UncompressedSize = r.ReadInt64(), CompressedSize = r.ReadInt64(), Compressed = (r.ReadInt64() == 1? true:false), Filepath = r.ReadString(StringBinaryFormat.FixedLength, 0x100)});
+                this.Add(new INFO0Entry()
+                {
+                    EntryID = r.ReadInt64(),
+                    UncompressedSize = r.ReadInt64(),
+                    CompressedSize = r.ReadInt64(),
+                    Compressed = Convert.ToBoolean(r.ReadInt64()),
+                    Filepath = r.ReadString(StringBinaryFormat.FixedLength, 0x100)});
             }
         }
     }
