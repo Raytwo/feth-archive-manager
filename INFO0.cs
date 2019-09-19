@@ -18,7 +18,9 @@ namespace FETHArchiveManager
 
         public void Write(EndianBinaryWriter w)
         {
-            foreach (INFO0Entry entry in this)
+            var output = from item in this orderby item.EntryID select item;
+
+            foreach (INFO0Entry entry in output)
             {
                 w.Write(entry.EntryID);
                 w.Write(entry.UncompressedSize);
