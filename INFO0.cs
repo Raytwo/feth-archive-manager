@@ -51,6 +51,8 @@ namespace FETHArchiveManager
                     Compressed = Convert.ToBoolean(r.ReadInt64()),
                     Filepath = r.ReadString(StringBinaryFormat.FixedLength, 0x100)});
             }
+
+            r.Close();
         }
     }
 
