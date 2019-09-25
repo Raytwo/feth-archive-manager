@@ -38,6 +38,7 @@ namespace FETHArchiveManager
         {
             throw new NotImplementedException();
             //INFO0Count = r.ReadInt64();
+            //INFO1Count = r.ReadInt64();
         }
     }
 }

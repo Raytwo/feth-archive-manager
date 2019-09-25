@@ -10,6 +10,7 @@
         Title="FETH Archive Manager" Height="450" Width="800">
     <Window.Resources>
         <local:INFO0 x:Key="info0"/>
+        <local:HexConverter x:Key="hexConverter"/>
         <CollectionViewSource x:Key="cvsINFO0" Source="{StaticResource info0}">
             <CollectionViewSource.SortDescriptions>
                 <scm:SortDescription PropertyName="EntryID"/>
@@ -26,8 +27,8 @@
                     <DataGrid x:Name="dataGridINFO" Margin="0,27,0,22" AutoGenerateColumns="False" ItemsSource="{Binding Source={StaticResource cvsINFO0}}" CanUserAddRows="False">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="Entry ID"  Binding="{Binding EntryID}"/>
-                            <DataGridTextColumn Header="Uncompressed size" Binding="{Binding UncompressedSize, StringFormat={}0x{0:X8}}" />
-                            <DataGridTextColumn Header="Compressed size" Binding="{Binding CompressedSize}"/>
+                            <DataGridTextColumn Header="Uncompressed size" Binding="{Binding UncompressedSize, Converter={StaticResource hexConverter}}" />
+                            <DataGridTextColumn Header="Compressed size" Binding="{Binding CompressedSize, Converter={StaticResource hexConverter}}"/>
                             <DataGridCheckBoxColumn Header="Compressed" Binding="{Binding Compressed}"/>
                             <DataGridTextColumn Header="Filepath" Binding="{Binding Filepath}"/>
                         </DataGrid.Columns>
