@@ -10,11 +10,12 @@ namespace FETHArchiveManager
     public class INFO2
     {
         public long INFO0Count { get; set; }
-        public long INFO1Count => 4;
+        public long INFO1Count { get; set; }
 
         public INFO2(long info0_count, long info1_count = 4)
         {
             INFO0Count = info0_count;
+            INFO1Count = info1_count;
         }
 
         public void Write(string filename)
@@ -36,9 +37,10 @@ namespace FETHArchiveManager
 
         public void Read(EndianBinaryReader r)
         {
-            throw new NotImplementedException();
-            //INFO0Count = r.ReadInt64();
-            //INFO1Count = r.ReadInt64();
+            INFO0Count = r.ReadInt64();
+            INFO1Count = r.ReadInt64();
+
+            r.Close();
         }
     }
 }
