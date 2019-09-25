@@ -100,6 +100,10 @@
     </EmbeddedResource>
     <EmbeddedResource Include="INFOs\patch1\INFO0.bin" />
     <EmbeddedResource Include="INFOs\patch2\INFO0.bin" />
+    <EmbeddedResource Include="INFOs\patch1\INFO1.bin" />
+    <EmbeddedResource Include="INFOs\patch1\INFO2.bin" />
+    <EmbeddedResource Include="INFOs\patch2\INFO1.bin" />
+    <EmbeddedResource Include="INFOs\patch2\INFO2.bin" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
