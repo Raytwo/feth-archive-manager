@@ -10,8 +10,14 @@
         Title="FETH Archive Manager" Height="450" Width="800">
     <Window.Resources>
         <local:INFO0 x:Key="info0"/>
+        <local:DATA0 x:Key="data0"/>
         <local:HexConverter x:Key="hexConverter"/>
         <CollectionViewSource x:Key="cvsINFO0" Source="{StaticResource info0}">
+            <CollectionViewSource.SortDescriptions>
+                <scm:SortDescription PropertyName="EntryID"/>
+            </CollectionViewSource.SortDescriptions>
+        </CollectionViewSource>
+        <CollectionViewSource x:Key="cvsDATA0" Source="{StaticResource data0}">
             <CollectionViewSource.SortDescriptions>
                 <scm:SortDescription PropertyName="EntryID"/>
             </CollectionViewSource.SortDescriptions>
@@ -20,7 +26,28 @@
     <Grid>
         <TabControl VerticalContentAlignment="Top" Margin="0,0,0,0.5" SelectedIndex="1">
             <TabItem Header="DATA" IsEnabled="False">
-                <Grid Background="#FFE5E5E5"/>
+                <Grid Background="#FFE5E5E5">
+                    <DataGrid x:Name="dataGridDATA" Margin="0,27,0,22" AutoGenerateColumns="False" ItemsSource="{Binding Source={StaticResource cvsDATA0}}" CanUserAddRows="False">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Entry ID"  Binding="{Binding EntryID}"/>
+                            <DataGridTextColumn Header="Uncompressed size" Binding="{Binding UncompressedSize, Converter={StaticResource hexConverter}}" />
+                            <DataGridTextColumn Header="Compressed size" Binding="{Binding CompressedSize, Converter={StaticResource hexConverter}}"/>
+                            <DataGridCheckBoxColumn Header="Compressed" Binding="{Binding Compressed}"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                    <ToolBar ToolBarTray.IsLocked="True" VerticalAlignment="Top" HorizontalContentAlignment="Stretch">
+                        <Button x:Name="newButtonDATA" Content="New" Click="NewButtonINFO_Click"/>
+                        <Button x:Name="openButtonDATA" Content="Open" Click="OpenButtonDATA_Click"/>
+                        <Button x:Name="saveButtonDATA" Content="Save" Click="SaveButtonINFO_Click"/>
+                        <Separator/>
+                        <Button x:Name="addButtonINFO1" Content="Add" Click="AddButtonINFO_Click"/>
+                        <Button x:Name="removeButtonINFO1" Content="Remove" Click="RemoveButtonINFO_Click"/>
+                    </ToolBar>
+                    <StatusBar VerticalAlignment="Bottom" VerticalContentAlignment="Center">
+                        <Label Content="Entry count: " Padding="0"/>
+                        <Label Content="{Binding ItemsSource.Count, ElementName=dataGridDATA}" Padding="0"/>
+                    </StatusBar>
+                </Grid>
             </TabItem>
             <TabItem Header="INFO">
                 <Grid Background="#FFE5E5E5">

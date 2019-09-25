@@ -12,6 +12,11 @@ namespace FETHArchiveManager
         public long INFO0Count { get; set; }
         public long INFO1Count { get; set; }
 
+        public INFO2(long info1_count = 4)
+        {
+            INFO1Count = info1_count;
+        }
+
         public INFO2(long info0_count, long info1_count = 4)
         {
             INFO0Count = info0_count;
