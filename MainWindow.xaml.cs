@@ -100,11 +100,22 @@ namespace FETHArchiveManager
             if (dialog.ShowDialog() == true)
             {
                 data0.Read(dialog.FileName);
-                /*
-                if (File.Exists(Path.GetFullPath(dialog.FileName) + "INFO2"))
-                    info2.Read(Path.GetFullPath(dialog.FileName) + "INFO2");*/
-
             }
+        }
+
+        private void ExtractButtonDATA_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void AddButtonDATA_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void RemoveButtonDATA_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

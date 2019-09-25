@@ -22,11 +22,9 @@ namespace FETHArchiveManager
 
         public void Write(EndianBinaryWriter w)
         {
-            var output = from item in this orderby item.EntryID select item;
-
-            foreach (DATA0Entry entry in output)
+            foreach (DATA0Entry entry in this)
             {
-                w.Write(entry.EntryID);
+                w.Write(entry.Offset);
                 w.Write(entry.UncompressedSize);
                 w.Write(entry.CompressedSize);
                 w.Write(entry.Compressed);
@@ -47,7 +45,7 @@ namespace FETHArchiveManager
             {
                 this.Add(new DATA0Entry()
                 {
-                    EntryID = r.ReadInt64(),
+                    Offset = r.ReadInt64(),
                     UncompressedSize = r.ReadInt64(),
                     CompressedSize = r.ReadInt64(),
                     Compressed = Convert.ToBoolean(r.ReadInt64())
@@ -60,7 +58,7 @@ namespace FETHArchiveManager
 
     public class DATA0Entry
     {
-        public long EntryID { get; set; }
+        public long Offset { get; set; }
         public long UncompressedSize { get; set; }
         public long CompressedSize { get; set; }
         public bool Compressed { get; set; }
