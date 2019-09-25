@@ -25,10 +25,7 @@ namespace FETHArchiveManager
                 w.Write(entry.EntryID);
                 w.Write(entry.UncompressedSize);
                 w.Write(entry.CompressedSize);
-                if (entry.UncompressedSize == entry.CompressedSize)
-                    w.Write((long)0);
-                else
-                    w.Write((long)1);
+                w.Write(entry.Compressed);
                 w.Write(entry.Filepath, StringBinaryFormat.FixedLength, 0x100);
             }
 
