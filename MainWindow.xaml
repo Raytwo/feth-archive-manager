@@ -24,6 +24,17 @@
             <TabItem Header="DATA">
                 <Grid Background="#FFE5E5E5">
                     <DataGrid x:Name="dataGridDATA" Margin="0,27,0,22" AutoGenerateColumns="False" ItemsSource="{Binding Source={StaticResource cvsDATA0}}" CanUserAddRows="False">
+                        <DataGrid.Resources>
+                            <ContextMenu x:Key="RowMenu" DataContext="{Binding PlacementTarget.DataContext, RelativeSource={RelativeSource Self}}">
+                                <MenuItem Header="Extract" Click="Extract_Click"/>
+                                <MenuItem Header="Extract (decompressed)" Click="ExtractDecompress_Click" IsEnabled="{Binding Compressed}"/>
+                            </ContextMenu>
+                        </DataGrid.Resources>
+                        <DataGrid.RowStyle>
+                            <Style TargetType="DataGridRow">
+                                <Setter Property="ContextMenu" Value="{StaticResource RowMenu}"/>
+                            </Style>
+                        </DataGrid.RowStyle>
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="Offset" Binding="{Binding Offset, Converter={StaticResource hexConverter}}"/>
                             <DataGridTextColumn Header="Uncompressed size" Binding="{Binding UncompressedSize, Converter={StaticResource hexConverter}}" />

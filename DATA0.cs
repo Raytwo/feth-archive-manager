@@ -1,10 +1,6 @@
 ﻿using G1Tool.IO;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FETHArchiveManager
 {
@@ -41,10 +37,11 @@ namespace FETHArchiveManager
         {
             long count = r.Length / 0x20;
 
-            for (int i = 0; i < count; i++)
+            for (uint i = 0; i < count; i++)
             {
                 this.Add(new DATA0Entry()
                 {
+                    EntryID = i,
                     Offset = r.ReadInt64(),
                     UncompressedSize = r.ReadInt64(),
                     CompressedSize = r.ReadInt64(),
@@ -58,6 +55,7 @@ namespace FETHArchiveManager
 
     public class DATA0Entry
     {
+        public uint EntryID { get; set; }
         public long Offset { get; set; }
         public long UncompressedSize { get; set; }
         public long CompressedSize { get; set; }

@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Windows;
@@ -13,6 +14,7 @@ namespace FETHArchiveManager
     public partial class MainWindow : Window
     {
         public DATA0 data0 { get; set; }
+        private byte[] data1;
         public INFO0 info0 { get; set; }
         public INFO2 info2 { get; set; }
 
@@ -99,23 +101,82 @@ namespace FETHArchiveManager
 
             if (dialog.ShowDialog() == true)
             {
+                string data1Path = Path.GetDirectoryName(dialog.FileName) + "/DATA1.bin";
+
                 data0.Read(dialog.FileName);
+
+                if (File.Exists(data1Path))
+                {
+                    data1 = File.ReadAllBytes(data1Path);
+                }
             }
         }
 
         private void ExtractButtonDATA_Click(object sender, RoutedEventArgs e)
         {
-
+            throw new NotImplementedException();
         }
 
         private void AddButtonDATA_Click(object sender, RoutedEventArgs e)
         {
-
+            throw new NotImplementedException();
         }
 
         private void RemoveButtonDATA_Click(object sender, RoutedEventArgs e)
         {
+            throw new NotImplementedException();
+        }
 
+        private void Extract_Click(object sender, RoutedEventArgs e)
+        {
+            DATA0Entry entry = (DATA0Entry)dataGridDATA.SelectedItem;
+
+            SaveFileDialog dialog = new SaveFileDialog();
+            dialog.DefaultExt = ".bin.gz";
+            dialog.FileName = entry.EntryID.ToString();
+            dialog.Filter = "GZipped FETH DATA0 Entry|*.bin.gz";
+
+            if (dialog.ShowDialog() == true)
+            {
+                using (EndianBinaryReader r = new EndianBinaryReader(new MemoryStream(data1), Endianness.Little))
+                {
+                    using (EndianBinaryWriter w = new EndianBinaryWriter(new FileStream(dialog.FileName, FileMode.Create), Endianness.Little))
+                    {
+                        r.SeekBegin(entry.Offset);
+
+                        if (entry.Compressed)
+                            w.Write(r.ReadBytes((int)entry.CompressedSize));
+                        else
+                            w.Write(r.ReadBytes((int)entry.UncompressedSize));
+                    }
+                }
+            }
+        }
+
+        private void ExtractDecompress_Click(object sender, RoutedEventArgs e)
+        {
+            DATA0Entry entry = (DATA0Entry)dataGridDATA.SelectedItem;
+
+            SaveFileDialog dialog = new SaveFileDialog();
+            dialog.DefaultExt = ".bin";
+            dialog.FileName = entry.EntryID.ToString();
+            dialog.Filter = "FETH DATA0 Entry|*.bin";
+
+            if (entry.Compressed)
+            {
+                if (dialog.ShowDialog() == true)
+                {
+                    using (EndianBinaryReader r = new EndianBinaryReader(new MemoryStream(data1), Endianness.Little))
+                    {
+                        using (EndianBinaryWriter w = new EndianBinaryWriter(new FileStream(dialog.FileName, FileMode.Create), Endianness.Little))
+                        {
+                            KTGZip zlib = new KTGZip();
+                            r.SeekBegin(entry.Offset);
+                            w.Write(zlib.Decompress(r.ReadBytes((int)entry.CompressedSize)));
+                        }
+                    }
+                }
+            }
         }
     }
 }
