@@ -1,2 +1,15 @@
-# feth-archive-manager
+# FETH Archive Manager
 Make patching Fire Emblem Three Houses great again
+
+Helper GUI to deal with Fire Emblem Three Houses archives 
+
+DATA0:
+- Editing entries
+- Individual file extraction (compressed/uncompressed) 
+
+INFO0:
+- Creating a new INFO0 file from scratch (Automatically fills the bare minimum content for patch2/v1.0.2) 
+- Adding/Editing/Removing entries 
+- Automatically creates a valid INFO2 on save 
+
+![Screencap but it failed to load hue](https://image.noelshack.com/fichiers/2019/41/1/1570450396-screencap.png)  
