@@ -114,7 +114,7 @@ namespace FETHArchiveManager
 
         private void ExtractButtonDATA_Click(object sender, RoutedEventArgs e)
         {
-            throw new NotImplementedException();
+            Extract_Click(sender, e);
         }
 
         private void AddButtonDATA_Click(object sender, RoutedEventArgs e)
