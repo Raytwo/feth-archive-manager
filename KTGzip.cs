@@ -53,6 +53,7 @@ namespace FETHArchiveManager
                         r.SeekBegin(r.Position + 0x7F & ~0x7F); // Align
                     }
                 }
+
                 return output;
             }
         }

@@ -5,6 +5,7 @@ using System.Reflection;
 using System.Windows;
 using G1Tool.IO;
 using Microsoft.Win32;
+using Microsoft.WindowsAPICodePack.Dialogs;
 
 namespace FETHArchiveManager
 {
@@ -45,7 +46,7 @@ namespace FETHArchiveManager
             dialog.FileName = "INFO0";
             dialog.Filter =
                     "FETH Patch Binary (INFO0.bin)|*.bin";
-            if(dialog.ShowDialog() == true)
+            if (dialog.ShowDialog() == true)
             {
                 INFO2 info2 = new INFO2(info0.Count);
                 info0.Write(dialog.FileName);
@@ -176,6 +177,37 @@ namespace FETHArchiveManager
                         }
                     }
                 }
+            }
+        }
+
+        private void ExtractAllButtonDATA_Click(object sender, RoutedEventArgs e)
+        {
+
+            CommonOpenFileDialog dialog = new CommonOpenFileDialog();
+            dialog.IsFolderPicker = true;
+
+
+            if (dialog.ShowDialog() == CommonFileDialogResult.Ok)
+            {
+                foreach(DATA0Entry entry in data0)
+                {
+                    if (entry.CompressedSize == 0 || entry.UncompressedSize == 0)
+                        continue;
+
+                    using (EndianBinaryReader r = new EndianBinaryReader(new MemoryStream(data1), Endianness.Little))
+                    {
+                        using (EndianBinaryWriter w = new EndianBinaryWriter(new FileStream(dialog.FileName + "/" + entry.EntryID + ".bin", FileMode.Create), Endianness.Little))
+                        {
+                            r.SeekBegin(entry.Offset);
+
+                            if (entry.Compressed)
+                                w.Write(r.ReadBytes((int)entry.CompressedSize));
+                            else
+                                w.Write(r.ReadBytes((int)entry.UncompressedSize));
+                        }
+                    }
+                }
+                
             }
         }
     }
