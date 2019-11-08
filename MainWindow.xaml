@@ -50,8 +50,8 @@
                         <Separator/>
                         <Button x:Name="addButtonDATA" Content="Add" IsEnabled="False" Click="AddButtonDATA_Click"/>
                         <Button x:Name="removeButtonDATA" Content="Remove" IsEnabled="False" Click="RemoveButtonDATA_Click"/>
-                        <Button x:Name="extractButtonDATA" Content="Extract" Click="ExtractButtonDATA_Click"/>
                         <Button x:Name="extractAllButtonDATA" Content="Extract all" Click="ExtractAllButtonDATA_Click"/>
+                        <Button x:Name="extractAllUncompressedButtonDATA" Content="Extract all (uncompressed)" Click="ExtractAllUncompressedButtonDATA_Click"/>
                     </ToolBar>
                     <StatusBar VerticalAlignment="Bottom" VerticalContentAlignment="Center">
                         <Label Content="Entry count: " Padding="0"/>

@@ -99,9 +99,39 @@ namespace FETHArchiveManager
             }
         }
 
-        private void ExtractButtonDATA_Click(object sender, RoutedEventArgs e)
+        private void ExtractAllUncompressedButtonDATA_Click(object sender, RoutedEventArgs e)
         {
-            Extract_Click(sender, e);
+
+            CommonOpenFileDialog dialog = new CommonOpenFileDialog { IsFolderPicker = true };
+
+            if (dialog.ShowDialog() == CommonFileDialogResult.Ok)
+            {
+                foreach(DATA0Entry entry in data0)
+                {
+                    if (entry.CompressedSize == 0 || entry.UncompressedSize == 0)
+                        continue;
+
+                    using (EndianBinaryReader r = new EndianBinaryReader(new FileStream( data1Filepath, FileMode.Open ), Endianness.Little))
+                    {
+                        using (EndianBinaryWriter w = new EndianBinaryWriter(new FileStream(dialog.FileName + "/" + entry.EntryID + ".bin", FileMode.Create), Endianness.Little))
+                        {
+                            if ( entry.Compressed )
+                            {
+                                KTGZip zlib = new KTGZip();
+                                r.SeekBegin(entry.Offset);
+                                w.Write(zlib.Decompress(r.ReadBytes((int)entry.CompressedSize)));
+                            }
+                            else
+                            {
+                                r.SeekBegin(entry.Offset);
+                                w.Write(r.ReadBytes( ( int ) entry.UncompressedSize));
+                            }
+                            
+                        }
+                    }
+                }
+                
+            }
         }
 
         private void AddButtonDATA_Click(object sender, RoutedEventArgs e)
@@ -179,7 +209,6 @@ namespace FETHArchiveManager
                         }
                     }
                 }
-                
             }
         }
     }
