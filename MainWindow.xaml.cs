@@ -94,7 +94,7 @@ namespace FETHArchiveManager
 
                 if (File.Exists(data1Path))
                 {
-                    data1Path = data1Filepath;
+                    data1Filepath = data1Path;
                 }
             }
         }
