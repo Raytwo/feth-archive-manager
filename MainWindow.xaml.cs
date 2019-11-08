@@ -199,9 +199,10 @@ namespace FETHArchiveManager
                     if (entry.CompressedSize == 0 || entry.UncompressedSize == 0)
                         continue;
 
+                    string extension = entry.Compressed ? ".bin.gz" : ".bin";
                     using (EndianBinaryReader r = new EndianBinaryReader(new FileStream( data1Filepath, FileMode.Open ), Endianness.Little))
                     {
-                        using (EndianBinaryWriter w = new EndianBinaryWriter(new FileStream(dialog.FileName + "/" + entry.EntryID + ".bin", FileMode.Create), Endianness.Little))
+                        using (EndianBinaryWriter w = new EndianBinaryWriter(new FileStream(dialog.FileName + "/" + entry.EntryID + extension, FileMode.Create), Endianness.Little))
                         {
                             r.SeekBegin(entry.Offset);
 
