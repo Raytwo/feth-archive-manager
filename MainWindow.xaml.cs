@@ -9,13 +9,10 @@ using Microsoft.WindowsAPICodePack.Dialogs;
 
 namespace FETHArchiveManager
 {
-    /// <summary>
-    /// Logique d'interaction pour MainWindow.xaml
-    /// </summary>
     public partial class MainWindow : Window
     {
         public DATA0 data0 { get; set; }
-        private byte[] data1;
+        private string data1Filepath;
         public INFO0 info0 { get; set; }
         public INFO2 info2 { get; set; }
 
@@ -41,11 +38,8 @@ namespace FETHArchiveManager
 
         private void SaveButtonINFO_Click(object sender, RoutedEventArgs e)
         {
-            SaveFileDialog dialog = new SaveFileDialog();
-            dialog.DefaultExt = ".bin";
-            dialog.FileName = "INFO0";
-            dialog.Filter =
-                    "FETH Patch Binary (INFO0.bin)|*.bin";
+            SaveFileDialog dialog = new SaveFileDialog { DefaultExt = ".bin", FileName = "INFO0", Filter = "FETH Patch Binary (INFO0.bin)|*.bin" };
+
             if (dialog.ShowDialog() == true)
             {
                 INFO2 info2 = new INFO2(info0.Count);
@@ -58,11 +52,7 @@ namespace FETHArchiveManager
         {
             info0.Clear();
 
-            OpenFileDialog dialog = new OpenFileDialog();
-            dialog.DefaultExt = ".bin";
-            dialog.FileName = "INFO0";
-            dialog.Filter =
-                    "FETH Patch Binary (INFO0.bin)|*.bin";
+            OpenFileDialog dialog = new OpenFileDialog { DefaultExt = ".bin", FileName = "INFO0", Filter = "FETH Patch Binary (INFO0.bin)|*.bin" };
 
             if (dialog.ShowDialog() == true)
             {
@@ -83,9 +73,9 @@ namespace FETHArchiveManager
             info0.Clear();
 
             var assembly = Assembly.GetExecutingAssembly();
-            string info0ResourceName = assembly.GetManifestResourceNames().Single(str => str.EndsWith("patch2.INFO0.bin"));
-            string info1ResourceName = assembly.GetManifestResourceNames().Single(str => str.EndsWith("patch2.INFO1.bin"));
-            string info2ResourceName = assembly.GetManifestResourceNames().Single(str => str.EndsWith("patch2.INFO2.bin"));
+            string info0ResourceName = assembly.GetManifestResourceNames().Single(str => str.EndsWith("patch3.INFO0.bin"));
+            string info1ResourceName = assembly.GetManifestResourceNames().Single(str => str.EndsWith("patch3.INFO1.bin"));
+            string info2ResourceName = assembly.GetManifestResourceNames().Single(str => str.EndsWith("patch3.INFO2.bin"));
             info0.Read(new EndianBinaryReader(Assembly.GetExecutingAssembly().GetManifestResourceStream(info0ResourceName), Endianness.Little));
             info2.Read(new EndianBinaryReader(Assembly.GetExecutingAssembly().GetManifestResourceStream(info2ResourceName), Endianness.Little));
         }
@@ -94,11 +84,7 @@ namespace FETHArchiveManager
         {
             data0.Clear();
 
-            OpenFileDialog dialog = new OpenFileDialog();
-            dialog.DefaultExt = ".bin";
-            dialog.FileName = "DATA0";
-            dialog.Filter =
-                    "FETH Data Binary (DATA0.bin)|*.bin";
+            OpenFileDialog dialog = new OpenFileDialog { DefaultExt = ".bin", FileName = "DATA0", Filter = "FETH Data Binary (DATA0.bin)|*.bin" };
 
             if (dialog.ShowDialog() == true)
             {
@@ -108,7 +94,7 @@ namespace FETHArchiveManager
 
                 if (File.Exists(data1Path))
                 {
-                    data1 = File.ReadAllBytes(data1Path);
+                    data1Path = data1Filepath;
                 }
             }
         }
@@ -132,23 +118,17 @@ namespace FETHArchiveManager
         {
             DATA0Entry entry = (DATA0Entry)dataGridDATA.SelectedItem;
 
-            SaveFileDialog dialog = new SaveFileDialog();
-            dialog.DefaultExt = ".bin.gz";
-            dialog.FileName = entry.EntryID.ToString();
-            dialog.Filter = "GZipped FETH DATA0 Entry|*.bin.gz";
+            SaveFileDialog dialog = new SaveFileDialog { DefaultExt = ".bin.gz", FileName = entry.EntryID.ToString(), Filter = "GZipped FETH DATA0 Entry|*.bin.gz" };
 
             if (dialog.ShowDialog() == true)
             {
-                using (EndianBinaryReader r = new EndianBinaryReader(new MemoryStream(data1), Endianness.Little))
+                using (EndianBinaryReader r = new EndianBinaryReader(new FileStream( data1Filepath, FileMode.Open ), Endianness.Little))
                 {
                     using (EndianBinaryWriter w = new EndianBinaryWriter(new FileStream(dialog.FileName, FileMode.Create), Endianness.Little))
                     {
                         r.SeekBegin(entry.Offset);
 
-                        if (entry.Compressed)
-                            w.Write(r.ReadBytes((int)entry.CompressedSize));
-                        else
-                            w.Write(r.ReadBytes((int)entry.UncompressedSize));
+                        w.Write( entry.Compressed ? r.ReadBytes( ( int ) entry.CompressedSize ) : r.ReadBytes( ( int ) entry.UncompressedSize ) );
                     }
                 }
             }
@@ -158,16 +138,13 @@ namespace FETHArchiveManager
         {
             DATA0Entry entry = (DATA0Entry)dataGridDATA.SelectedItem;
 
-            SaveFileDialog dialog = new SaveFileDialog();
-            dialog.DefaultExt = ".bin";
-            dialog.FileName = entry.EntryID.ToString();
-            dialog.Filter = "FETH DATA0 Entry|*.bin";
+            SaveFileDialog dialog = new SaveFileDialog { DefaultExt = ".bin", FileName = entry.EntryID.ToString(), Filter = "FETH DATA0 Entry|*.bin" };
 
             if (entry.Compressed)
             {
                 if (dialog.ShowDialog() == true)
                 {
-                    using (EndianBinaryReader r = new EndianBinaryReader(new MemoryStream(data1), Endianness.Little))
+                    using (EndianBinaryReader r = new EndianBinaryReader(new FileStream( data1Filepath, FileMode.Open ), Endianness.Little))
                     {
                         using (EndianBinaryWriter w = new EndianBinaryWriter(new FileStream(dialog.FileName, FileMode.Create), Endianness.Little))
                         {
@@ -183,9 +160,7 @@ namespace FETHArchiveManager
         private void ExtractAllButtonDATA_Click(object sender, RoutedEventArgs e)
         {
 
-            CommonOpenFileDialog dialog = new CommonOpenFileDialog();
-            dialog.IsFolderPicker = true;
-
+            CommonOpenFileDialog dialog = new CommonOpenFileDialog { IsFolderPicker = true };
 
             if (dialog.ShowDialog() == CommonFileDialogResult.Ok)
             {
@@ -194,16 +169,13 @@ namespace FETHArchiveManager
                     if (entry.CompressedSize == 0 || entry.UncompressedSize == 0)
                         continue;
 
-                    using (EndianBinaryReader r = new EndianBinaryReader(new MemoryStream(data1), Endianness.Little))
+                    using (EndianBinaryReader r = new EndianBinaryReader(new FileStream( data1Filepath, FileMode.Open ), Endianness.Little))
                     {
                         using (EndianBinaryWriter w = new EndianBinaryWriter(new FileStream(dialog.FileName + "/" + entry.EntryID + ".bin", FileMode.Create), Endianness.Little))
                         {
                             r.SeekBegin(entry.Offset);
 
-                            if (entry.Compressed)
-                                w.Write(r.ReadBytes((int)entry.CompressedSize));
-                            else
-                                w.Write(r.ReadBytes((int)entry.UncompressedSize));
+                            w.Write( entry.Compressed ? r.ReadBytes( ( int ) entry.CompressedSize ) : r.ReadBytes( ( int ) entry.UncompressedSize ) );
                         }
                     }
                 }
