@@ -212,5 +212,29 @@ namespace FETHArchiveManager
                 }
             }
         }
+
+        private void DATAGrid_Drop(object sender, DragEventArgs e)
+        {
+            if ( e.Data.GetDataPresent( DataFormats.FileDrop ) )
+            {
+                string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
+                var file = files[0];                
+
+                string data1Path = Path.GetDirectoryName(file) + "/DATA1.bin";
+
+                data0.Read(file);
+
+                if (File.Exists(data1Path))
+                {
+                    data1Filepath = data1Path;
+                }
+            }
+            
+        }
+
+        private void DATAGrid_PreviewDragOver(object sender, DragEventArgs e)
+        {
+            e.Handled = true;
+        }
     }
 }

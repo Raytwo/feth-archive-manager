@@ -22,7 +22,7 @@
     <Grid>
         <TabControl VerticalContentAlignment="Top" Margin="0,0,0,0.5" SelectedIndex="1">
             <TabItem Header="DATA">
-                <Grid Background="#FFE5E5E5">
+                <Grid Background="#FFE5E5E5" Drop="DATAGrid_Drop" PreviewDragOver="DATAGrid_PreviewDragOver" AllowDrop="True">
                     <DataGrid x:Name="dataGridDATA" Margin="0,27,0,22" AutoGenerateColumns="False" ItemsSource="{Binding Source={StaticResource cvsDATA0}}" CanUserAddRows="False">
                         <DataGrid.Resources>
                             <ContextMenu x:Key="RowMenu" DataContext="{Binding PlacementTarget.DataContext, RelativeSource={RelativeSource Self}}">
