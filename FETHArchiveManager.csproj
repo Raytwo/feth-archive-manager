@@ -114,6 +114,9 @@
     <EmbeddedResource Include="INFOs\patch1\INFO2.bin" />
     <EmbeddedResource Include="INFOs\patch2\INFO1.bin" />
     <EmbeddedResource Include="INFOs\patch2\INFO2.bin" />
+    <EmbeddedResource Include="INFOs\patch3\INFO0.bin" />
+    <EmbeddedResource Include="INFOs\patch3\INFO1.bin" />
+    <EmbeddedResource Include="INFOs\patch3\INFO2.bin" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -123,5 +126,6 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
