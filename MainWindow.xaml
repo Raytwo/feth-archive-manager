@@ -26,7 +26,7 @@
                     <DataGrid x:Name="dataGridDATA" Margin="0,27,0,22" AutoGenerateColumns="False" ItemsSource="{Binding Source={StaticResource cvsDATA0}}" CanUserAddRows="False">
                         <DataGrid.Resources>
                             <ContextMenu x:Key="RowMenu" DataContext="{Binding PlacementTarget.DataContext, RelativeSource={RelativeSource Self}}">
-                                <MenuItem Header="Extract" Click="Extract_Click"/>
+                                <MenuItem Header="Extract" Click="Extract_Click" IsEnabled="{Binding UncompressedSize}"/>
                                 <MenuItem Header="Extract (uncompressed)" Click="ExtractDecompress_Click" IsEnabled="{Binding Compressed}"/>
                             </ContextMenu>
                         </DataGrid.Resources>
